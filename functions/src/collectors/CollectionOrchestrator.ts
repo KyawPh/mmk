@@ -3,6 +3,8 @@ import { db } from '../utils/firebase';
 import { CBMCollector } from './CBMCollector';
 import { KBZCollector } from './banks/KBZCollector';
 import { AYACollector } from './banks/AYACollector';
+import { YomaCollector } from './banks/YomaCollector';
+import { CBBankCollector } from './banks/CBBankCollector';
 import { BinanceP2PCollector } from './crypto/BinanceP2PCollector';
 
 export class CollectionOrchestrator {
@@ -19,6 +21,8 @@ export class CollectionOrchestrator {
       new CBMCollector(),
       new KBZCollector(),
       new AYACollector(),
+      new YomaCollector(),
+      new CBBankCollector(),
       new BinanceP2PCollector(),
     ];
 
