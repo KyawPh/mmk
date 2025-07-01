@@ -23,12 +23,12 @@
 
 ## Phase 1: Telegram Bot Implementation [0%]
 
-### 1.1 Project Setup & Configuration [0%]
-- ⬜ Create functions directory and package.json
-  - ⬜ Initialize npm in functions/ directory
-  - ⬜ Add Firebase Functions dependencies
-  - ⬜ Add TypeScript and development dependencies
-  - ⬜ Add testing framework (Jest)
+### 1.1 Project Setup & Configuration [25%]
+- ✅ Create functions directory and package.json
+  - ✅ Initialize npm in functions/ directory
+  - ✅ Add Firebase Functions dependencies
+  - ✅ Add TypeScript and development dependencies
+  - ✅ Add testing framework (Jest)
 - ⬜ Configure TypeScript
   - ⬜ Create tsconfig.json with strict mode
   - ⬜ Set up paths and build output
