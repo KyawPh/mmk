@@ -1,6 +1,8 @@
 import { httpsFunction, scheduledFunction } from './utils/functions';
 import { handleWebhook } from './handlers/telegram/webhook';
 import { cleanupRateLimits } from './utils/rateLimiter';
+import { collectRatesHandler } from './handlers/collectors/scheduled';
+import { manualCollectRates } from './handlers/collectors/manual';
 
 // Health check endpoint
 export const healthCheck = httpsFunction((_req, res) => {
@@ -22,7 +24,12 @@ export const cleanupRateLimitsJob = scheduledFunction('every 1 hours', async () 
   await cleanupRateLimits();
 });
 
+// Scheduled function to collect exchange rates
+export const collectRates = scheduledFunction('every 30 minutes', collectRatesHandler);
+
+// Manual trigger for rate collection (admin only)
+export const triggerCollection = httpsFunction(manualCollectRates);
+
 // TODO: Add more functions as we implement them
-// export const collectRates = scheduledFunction('every 30 minutes', collectRatesHandler);
 // export const processAlerts = scheduledFunction('every 5 minutes', processAlertsHandler);
 // export const sendSubscriptions = scheduledFunction('0 9 * * *', sendSubscriptionsHandler);
