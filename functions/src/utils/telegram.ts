@@ -10,6 +10,37 @@ export interface TelegramResponse<T> {
   description?: string;
 }
 
+export interface InlineKeyboardButton {
+  text: string;
+  url?: string;
+  callback_data?: string;
+  switch_inline_query?: string;
+  switch_inline_query_current_chat?: string;
+  callback_game?: any;
+  pay?: boolean;
+}
+
+export interface InlineKeyboardMarkup {
+  inline_keyboard: InlineKeyboardButton[][];
+}
+
+export interface KeyboardButton {
+  text: string;
+  request_contact?: boolean;
+  request_location?: boolean;
+  request_poll?: {
+    type?: 'quiz' | 'regular';
+  };
+}
+
+export interface ReplyKeyboardMarkup {
+  keyboard: (string | KeyboardButton)[][];
+  resize_keyboard?: boolean;
+  one_time_keyboard?: boolean;
+  input_field_placeholder?: string;
+  selective?: boolean;
+}
+
 export interface SendMessageParams {
   chat_id: number | string;
   text: string;
