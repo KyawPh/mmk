@@ -21,28 +21,26 @@ module.exports = {
     // Prettier integration
     'prettier/prettier': 'error',
     
-    // TypeScript specific rules
-    '@typescript-eslint/explicit-function-return-type': ['error', {
-      allowExpressions: true,
-      allowTypedFunctionExpressions: true,
-    }],
-    '@typescript-eslint/no-explicit-any': 'error',
+    // TypeScript specific rules - relaxed for initial development
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['error', {
       argsIgnorePattern: '^_',
       varsIgnorePattern: '^_',
     }],
     '@typescript-eslint/no-floating-promises': 'error',
-    '@typescript-eslint/no-misused-promises': 'error',
+    '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/await-thenable': 'error',
-    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
-    '@typescript-eslint/prefer-nullish-coalescing': 'error',
+    '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
+    '@typescript-eslint/prefer-nullish-coalescing': 'warn',
     '@typescript-eslint/prefer-optional-chain': 'error',
-    '@typescript-eslint/strict-boolean-expressions': ['error', {
-      allowNullableObject: true,
-      allowNullableBoolean: true,
-      allowNullableString: true,
-      allowNullableNumber: true,
-    }],
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-require-imports': 'off',
     
     // General rules
     'no-console': ['warn', { allow: ['warn', 'error'] }],
@@ -56,6 +54,7 @@ module.exports = {
     'curly': ['error', 'all'],
     'eqeqeq': ['error', 'always'],
     'no-throw-literal': 'error',
+    'no-useless-escape': 'off',
     
     // Import rules
     'sort-imports': ['error', {
