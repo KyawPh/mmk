@@ -12,18 +12,19 @@
 - 🔄 Needs Review
 
 ## Prerequisites Checklist
-- [ ] Firebase project name decided (e.g., `mmk-currency-bot`)
+- [x] Firebase project name decided (e.g., `mmk-currency-bot`)
 - [ ] Telegram bot created via @BotFather
 - [ ] Telegram bot token obtained
-- [ ] Node.js 18+ installed
-- [ ] Firebase CLI installed globally
-- [ ] GitHub repository access configured
+- [x] Node.js 18+ installed
+- [x] Firebase CLI installed globally
+- [x] GitHub repository access configured
+- [ ] Java installed (required for Firebase emulators)
 
 ---
 
 ## Phase 1: Telegram Bot Implementation [0%]
 
-### 1.1 Project Setup & Configuration [75%]
+### 1.1 Project Setup & Configuration [90%]
 - ✅ Create functions directory and package.json
   - ✅ Initialize npm in functions/ directory
   - ✅ Add Firebase Functions dependencies
@@ -38,10 +39,10 @@
   - ✅ Configure Prettier with ESLint integration
   - ✅ Add pre-commit hooks (husky)
   - ✅ Create .editorconfig
-- ⬜ Initialize Firebase project
-  - ⬜ Create Firebase project in console
-  - ⬜ Run `firebase init` with Functions, Firestore, Hosting
-  - ⬜ Configure Firebase emulators for local development
+- ✅ Initialize Firebase project
+  - ✅ Create Firebase project in console
+  - ✅ Run `firebase init` with Functions, Firestore, Hosting
+  - ✅ Configure Firebase emulators for local development
   - ⬜ Set up separate dev/prod projects
 - ⬜ Configure environment management
   - ⬜ Set up Firebase environment configs

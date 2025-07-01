@@ -15,8 +15,6 @@ yarn-error.log*
 .firebase/
 firebase-debug.log
 firestore-debug.log
-firestore.rules
-firestore.indexes.json
 ui-debug.log
 firebase-export-*
 
