@@ -2,6 +2,8 @@
 
 This guide explains how to configure GitHub Actions and secrets for the MMK Currency Bot.
 
+> **Solo Developer?** See [SOLO_DEV_SETUP.md](SOLO_DEV_SETUP.md) for a simplified setup!
+
 ## Required GitHub Secrets
 
 ### 1. FIREBASE_TOKEN

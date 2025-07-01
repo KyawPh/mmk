@@ -1,10 +1,14 @@
 name: PR Checks
 
+# This workflow runs quality checks on PRs and pushes
+# For solo development: These checks also run on direct pushes to master
+# Add [skip ci] to commit message to bypass checks in emergencies
+
 on:
   pull_request:
     branches: [ master, main, develop ]
   push:
-    branches: [ develop ]
+    branches: [ master, main, develop ]
 
 jobs:
   code-quality:

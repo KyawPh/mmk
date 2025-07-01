@@ -1,5 +1,8 @@
 # CODEOWNERS for MMK Currency Bot
 # This file defines who is responsible for code reviews
+# 
+# NOTE: Currently a solo project. This file is kept for future team growth.
+# When working alone, you can bypass review requirements.
 
 # Default owners for everything
 * @KyawPh

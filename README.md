@@ -31,6 +31,8 @@ See [docs/TODO.md](docs/TODO.md) for detailed development progress.
 
 ## Getting Started
 
+> **Solo Developer?** Check out our [Solo Dev Setup Guide](docs/SOLO_DEV_SETUP.md) for a streamlined workflow!
+
 ### Prerequisites
 
 - Node.js 18+ and npm
