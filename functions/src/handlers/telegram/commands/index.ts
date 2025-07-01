@@ -42,6 +42,8 @@ class CommandRouter {
     const { handleAlert } = require('./alert');
     const { handleSubscribe } = require('./subscribe');
     const { handleSettings } = require('./settings');
+    const { handlePredict } = require('./predict');
+    const { handleCompare } = require('./compare');
 
     // Register commands
     this.register({
@@ -88,6 +90,20 @@ class CommandRouter {
       command: '/settings',
       description: 'Manage your preferences',
       handler: handleSettings,
+    });
+
+    this.register({
+      command: '/predict',
+      description: 'Get rate predictions based on trends',
+      usage: '/predict [currency] [days]',
+      handler: handlePredict,
+    });
+
+    this.register({
+      command: '/compare',
+      description: 'Compare multiple currencies',
+      usage: '/compare [currency1] [currency2] ...',
+      handler: handleCompare,
     });
 
     // Admin commands

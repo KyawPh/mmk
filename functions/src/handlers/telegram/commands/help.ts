@@ -12,6 +12,8 @@ export const handleHelp: CommandHandler = async (message, _args) => {
 /history [days] [currency] - View historical rates
 /alert [above|below] [rate] [currency] - Set price alerts
 /subscribe [daily|weekly] - Get scheduled updates
+/predict [currency] [days] - Get rate predictions
+/compare [currencies...] - Compare multiple currencies
 /settings - Manage your preferences
 
 🔹 *Command Examples:*
@@ -23,6 +25,8 @@ export const handleHelp: CommandHandler = async (message, _args) => {
 • \`/alert below 3500 USD KBZ\` - Alert when KBZ USD < 3,500
 • \`/subscribe daily\` - Get daily rate updates at 9 AM
 • \`/subscribe\` - View your subscriptions
+• \`/predict USD 7\` - Get 7-day USD prediction
+• \`/compare USD EUR SGD\` - Compare multiple currencies
 
 🔹 *Supported Currencies:*
 USD, EUR, SGD, THB, CNY, GBP, JPY, AUD
