@@ -20,8 +20,6 @@ Myanmar operates with multiple simultaneous exchange rates, creating confusion f
 
 🚧 **Phase 1: Telegram Bot Implementation** (In Progress)
 
-See [docs/TODO.md](docs/TODO.md) for detailed development progress.
-
 ## Tech Stack
 
 - **Backend**: Firebase Cloud Functions (Node.js/TypeScript)
@@ -31,7 +29,6 @@ See [docs/TODO.md](docs/TODO.md) for detailed development progress.
 
 ## Getting Started
 
-> **Solo Developer?** Check out our [Solo Dev Setup Guide](docs/SOLO_DEV_SETUP.md) for a streamlined workflow!
 
 ### Prerequisites
 
@@ -97,7 +94,6 @@ npm run deploy:prod
 firebase use development  # or 'production'
 ```
 
-See [Solo Dev Setup Guide](docs/SOLO_DEV_SETUP.md) for quick setup or [Environment Setup Guide](docs/ENVIRONMENT_SETUP.md) for detailed configuration.
 
 ## Bot Commands
 
@@ -114,7 +110,6 @@ See [Solo Dev Setup Guide](docs/SOLO_DEV_SETUP.md) for quick setup or [Environme
 
 ```
 mmk/
-├── docs/           # Documentation and TODO tracking
 ├── functions/      # Firebase Cloud Functions
 │   ├── src/
 │   │   ├── handlers/     # Platform-specific bot handlers
@@ -127,11 +122,9 @@ mmk/
 
 ## Contributing
 
-1. Check [docs/TODO.md](docs/TODO.md) for available tasks
-2. Create a feature branch
-3. Update TODO.md when starting/completing tasks
-4. Follow the commit conventions in [CLAUDE.md](CLAUDE.md)
-5. Submit a pull request
+1. Create a feature branch
+2. Follow the commit conventions
+3. Submit a pull request
 
 ## License
 

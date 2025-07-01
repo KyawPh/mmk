@@ -55,3 +55,6 @@ coverage/
 # Project instructions (private)
 CLAUDE.md
 claude.md
+
+# Documentation (local only)
+docs/
