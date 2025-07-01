@@ -97,7 +97,7 @@ npm run deploy:prod
 firebase use development  # or 'production'
 ```
 
-See [Environment Setup Guide](docs/ENVIRONMENT_SETUP.md) for detailed configuration.
+See [Solo Dev Setup Guide](docs/SOLO_DEV_SETUP.md) for quick setup or [Environment Setup Guide](docs/ENVIRONMENT_SETUP.md) for detailed configuration.
 
 ## Bot Commands
 

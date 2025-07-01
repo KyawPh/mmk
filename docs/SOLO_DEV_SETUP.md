@@ -2,26 +2,59 @@
 
 This is a simplified setup guide for solo developers working on the MMK Currency Bot.
 
+## ✅ Complete Setup Checklist
+
+Follow these steps in order:
+
+- [ ] Create GitHub Environments (2 min)
+  - [ ] Create `development` environment
+  - [ ] Create `production` environment
+- [ ] Add GitHub Secret (2 min)
+  - [ ] Generate Firebase token: `firebase login:ci`
+  - [ ] Add `FIREBASE_TOKEN` to GitHub Secrets
+- [ ] Local Environment (already done)
+  - [x] Bot token configured in `.env`
+  - [x] Admin ID configured
+- [ ] First Deploy (5 min)
+  - [ ] Run `npm run deploy:dev` to test
+  - [ ] Check GitHub Actions tab for status
+
+**That's it!** You're ready to code and deploy.
+
 ## Quick Start
 
 ### 1. Minimal GitHub Setup
 
-Since you're working alone, you only need:
+Since you're working alone, you only need these three things:
 
-#### Required GitHub Secret
+#### A. GitHub Environments (2 minutes)
+Create these for deployment tracking:
+
+1. Go to Settings > Environments
+2. Click "New environment" → Name: `development` → Create (no settings needed)
+3. Click "New environment" → Name: `production` → Create
+   - Optional: Add 5-minute wait timer for safety
+   - No reviewers needed!
+
+#### B. GitHub Secret (Required)
 1. Generate Firebase token:
    ```bash
    firebase login:ci
    ```
 2. Add to GitHub:
    - Go to Settings > Secrets and variables > Actions
-   - Add `FIREBASE_TOKEN` with the token value
+   - Click "New repository secret"
+   - Name: `FIREBASE_TOKEN`
+   - Value: Paste the token from step 1
+   - Click "Add secret"
 
-#### Optional Branch Protection
-For solo development, branch protection is optional but can help prevent accidents:
-- No PR reviews required
-- Just enable status checks to ensure code quality
-- Allow yourself to push directly after checks pass
+#### C. Branch Protection (Optional)
+Skip this unless you want extra safety:
+- Go to Settings > Branches > Add rule
+- Branch pattern: `master`
+- ✅ Require status checks (pick the workflows)
+- ✅ Include administrators
+- ❌ Skip everything else
 
 ### 2. Simplified Workflow
 
@@ -151,3 +184,32 @@ Consider adding more process when:
 - You need audit trails for compliance
 
 Remember: The full team infrastructure is ready when you need it!
+
+## Troubleshooting
+
+### GitHub Actions Not Running?
+- Check if you added `FIREBASE_TOKEN` secret
+- Make sure environments are created (even if empty)
+- Check Actions tab for error messages
+
+### Deployment Failed?
+- Verify Firebase projects exist (`mmk-currency-bot` and `mmk-currency-bot-dev`)
+- Run `firebase login` to refresh credentials
+- Check `firebase projects:list` shows both projects
+
+### Need More Details?
+- [Environment Setup Guide](ENVIRONMENT_SETUP.md) - Detailed Firebase configuration
+- [TODO.md](TODO.md) - Track your progress
+
+### Common Commands
+```bash
+# If deployment fails locally
+firebase login --reauth
+firebase use development  # or production
+
+# Check which project is active
+firebase use
+
+# View logs
+firebase functions:log --project mmk-currency-bot-dev
+```
