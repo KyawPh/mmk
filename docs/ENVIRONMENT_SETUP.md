@@ -2,6 +2,28 @@
 
 This guide explains how to configure environment variables for the MMK Currency Bot.
 
+## Development vs Production
+
+The project uses separate Firebase projects for development and production:
+- **Development**: `mmk-currency-bot-dev` (default)
+- **Production**: `mmk-currency-bot`
+
+### Switching Between Environments
+
+```bash
+# List available projects
+firebase projects:list
+
+# Switch to development (default)
+firebase use development
+
+# Switch to production
+firebase use production
+
+# Check current project
+firebase use
+```
+
 ## Prerequisites
 
 Before setting up environment variables, ensure you have:
@@ -11,18 +33,32 @@ Before setting up environment variables, ensure you have:
 
 ## Configuration Methods
 
-### 1. Firebase Functions Config (Production)
+### 1. Firebase Functions Config
 
-For production deployment, use Firebase Functions configuration:
+Use environment-specific scripts:
 
+#### Development Environment
 ```bash
-# Run the setup script
-./scripts/set-env.sh
+# Configure development environment
+./scripts/set-env-dev.sh
 
-# Or manually set each variable
-firebase functions:config:set telegram.bot_token="YOUR_BOT_TOKEN"
-firebase functions:config:set telegram.webhook_secret="YOUR_WEBHOOK_SECRET"
-firebase functions:config:set admin.telegram_ids="123456789,987654321"
+# This will:
+# - Switch to development project
+# - Set relaxed rate limits
+# - Enable debug logging
+# - Configure development bot token
+```
+
+#### Production Environment
+```bash
+# Configure production environment (requires confirmation)
+./scripts/set-env-prod.sh
+
+# This will:
+# - Switch to production project
+# - Set strict rate limits
+# - Enable analytics and monitoring
+# - Configure production bot token
 ```
 
 ### 2. Local Development (.runtimeconfig.json)
@@ -106,3 +142,30 @@ If environment variables aren't loading:
 1. Restart the Firebase emulators
 2. Check file permissions on `.runtimeconfig.json`
 3. Verify the config structure matches expected format
+
+## Deployment
+
+### Deploy to Development
+```bash
+npm run deploy:dev
+# Or manually:
+firebase use development
+firebase deploy --only functions
+```
+
+### Deploy to Production
+```bash
+npm run deploy:prod
+# This will show a warning before deploying
+
+# Or manually:
+firebase use production
+firebase deploy --only functions
+```
+
+### Best Practices
+1. Always test in development first
+2. Use different bot tokens for each environment
+3. Never test with production data in development
+4. Review all changes before production deployment
+5. Monitor logs after deployment: `firebase functions:log`

@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "mmk-currency-bot"
+    "default": "mmk-currency-bot-dev",
+    "production": "mmk-currency-bot",
+    "development": "mmk-currency-bot-dev"
   }
 }

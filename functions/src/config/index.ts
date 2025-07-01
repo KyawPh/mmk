@@ -112,9 +112,20 @@ export const config: Config = {
   },
 };
 
-export const isProduction = (): boolean => process.env['NODE_ENV'] === 'production';
+export const isProduction = (): boolean =>
+  // Check multiple sources for production environment
+  process.env['NODE_ENV'] === 'production' ||
+  process.env['FIREBASE_PROJECT'] === 'mmk-currency-bot' ||
+  getEnvVar('environment.name', 'development') === 'production';
 
-export const isDevelopment = (): boolean => process.env['NODE_ENV'] === 'development';
+export const isDevelopment = (): boolean => !isProduction();
+
+export const getEnvironmentName = (): string => {
+  if (isProduction()) {
+    return 'production';
+  }
+  return 'development';
+};
 
 export const isAdmin = (telegramId: string): boolean =>
   config.admin.telegramIds.includes(telegramId);

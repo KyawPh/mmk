@@ -82,10 +82,20 @@ npm test
 
 ### Deployment
 
+The project uses separate Firebase projects for development and production:
+
 ```bash
-# Deploy to Firebase
-firebase deploy
+# Deploy to development (default)
+npm run deploy:dev
+
+# Deploy to production (requires confirmation)
+npm run deploy:prod
+
+# Switch between projects
+firebase use development  # or 'production'
 ```
+
+See [Environment Setup Guide](docs/ENVIRONMENT_SETUP.md) for detailed configuration.
 
 ## Bot Commands
 

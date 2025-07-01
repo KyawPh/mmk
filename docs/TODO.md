@@ -43,7 +43,7 @@
   - ✅ Create Firebase project in console
   - ✅ Run `firebase init` with Functions, Firestore, Hosting
   - ✅ Configure Firebase emulators for local development
-  - ⬜ Set up separate dev/prod projects
+  - ✅ Set up separate dev/prod projects
 - ✅ Configure environment management
   - ✅ Set up Firebase environment configs
   - ✅ Create .env.example file

@@ -10,6 +10,8 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
+    "deploy:dev": "firebase use development && firebase deploy --only functions",
+    "deploy:prod": "echo '⚠️  Deploying to PRODUCTION!' && firebase use production && firebase deploy --only functions",
     "logs": "firebase functions:log",
     "test": "jest",
     "test:watch": "jest --watch",
