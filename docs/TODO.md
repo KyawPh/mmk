@@ -13,8 +13,8 @@
 
 ## Prerequisites Checklist
 - [x] Firebase project name decided (e.g., `mmk-currency-bot`)
-- [ ] Telegram bot created via @BotFather
-- [ ] Telegram bot token obtained
+- [x] Telegram bot created via @BotFather
+- [x] Telegram bot token obtained
 - [x] Node.js 18+ installed
 - [x] Firebase CLI installed globally
 - [x] GitHub repository access configured
@@ -24,7 +24,7 @@
 
 ## Phase 1: Telegram Bot Implementation [0%]
 
-### 1.1 Project Setup & Configuration [95%]
+### 1.1 Project Setup & Configuration [100%]
 - ✅ Create functions directory and package.json
   - ✅ Initialize npm in functions/ directory
   - ✅ Add Firebase Functions dependencies
@@ -47,8 +47,8 @@
 - ✅ Configure environment management
   - ✅ Set up Firebase environment configs
   - ✅ Create .env.example file
-  - ❌ Configure Telegram bot token (Blocked: Need bot token from @BotFather)
-  - ❌ Set up admin user IDs (Blocked: Need Telegram user IDs)
+  - ✅ Configure Telegram bot token
+  - ✅ Set up admin user IDs
   - ✅ Document all required environment variables
 
 ### 1.2 CI/CD & Development Workflow [0%]
