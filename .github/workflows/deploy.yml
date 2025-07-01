@@ -1,0 +1,139 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+          - development
+          - production
+
+jobs:
+  deploy-development:
+    name: Deploy to Development
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/develop') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'development')
+    runs-on: ubuntu-latest
+    environment: development
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        cache-dependency-path: functions/package-lock.json
+    
+    - name: Install dependencies
+      run: |
+        cd functions
+        npm ci
+    
+    - name: Build project
+      run: |
+        cd functions
+        npm run build
+    
+    - name: Run tests
+      run: |
+        cd functions
+        npm test -- --passWithNoTests
+    
+    - name: Deploy to Firebase Development
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only functions,firestore,hosting --project mmk-currency-bot-dev
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    
+    - name: Notify deployment success
+      if: success()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '✅ Successfully deployed to **development** environment!'
+          })
+
+  deploy-production:
+    name: Deploy to Production
+    if: |
+      (github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main')) ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        cache-dependency-path: functions/package-lock.json
+    
+    - name: Install dependencies
+      run: |
+        cd functions
+        npm ci
+    
+    - name: Build project
+      run: |
+        cd functions
+        npm run build
+    
+    - name: Run tests
+      run: |
+        cd functions
+        npm test -- --passWithNoTests
+    
+    - name: Run security audit
+      run: |
+        cd functions
+        npm audit --production --audit-level=high
+    
+    - name: Deploy to Firebase Production
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only functions,firestore,hosting --project mmk-currency-bot
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    
+    - name: Create deployment tag
+      if: success()
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+        git tag -a "deploy-prod-${TIMESTAMP}" -m "Production deployment ${TIMESTAMP}"
+        git push origin "deploy-prod-${TIMESTAMP}"
+    
+    - name: Notify deployment success
+      if: success()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const timestamp = new Date().toISOString();
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `🚀 Successfully deployed to **production** environment at ${timestamp}!`
+          })

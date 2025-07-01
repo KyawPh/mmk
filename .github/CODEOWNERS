@@ -1,0 +1,27 @@
+# CODEOWNERS for MMK Currency Bot
+# This file defines who is responsible for code reviews
+
+# Default owners for everything
+* @KyawPh
+
+# Firebase and backend functions
+/functions/ @KyawPh
+/firebase.json @KyawPh
+/firestore.rules @KyawPh
+/firestore.indexes.json @KyawPh
+
+# GitHub Actions workflows
+/.github/workflows/ @KyawPh
+
+# Documentation
+/docs/ @KyawPh
+*.md @KyawPh
+
+# Environment and configuration
+/.env* @KyawPh
+/scripts/ @KyawPh
+
+# Frontend (future)
+/public/ @KyawPh
+/web/ @KyawPh
+/mobile/ @KyawPh

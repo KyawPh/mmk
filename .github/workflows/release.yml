@@ -1,0 +1,80 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        cache-dependency-path: functions/package-lock.json
+    
+    - name: Install dependencies
+      run: |
+        cd functions
+        npm ci
+    
+    - name: Build project
+      run: |
+        cd functions
+        npm run build
+    
+    - name: Generate changelog
+      id: changelog
+      run: |
+        # Get the previous tag
+        PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+        if [ -z "$PREV_TAG" ]; then
+          echo "No previous tag found, including all commits"
+          CHANGELOG=$(git log --pretty=format:"- %s" --reverse)
+        else
+          echo "Generating changelog from $PREV_TAG to ${{ github.ref_name }}"
+          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV_TAG".."${{ github.ref_name }}")
+        fi
+        
+        # Save to file for the release
+        echo "## What's Changed" > changelog.md
+        echo "" >> changelog.md
+        echo "$CHANGELOG" >> changelog.md
+        echo "" >> changelog.md
+        echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${{ github.ref_name }}" >> changelog.md
+        
+        # Set output for release body
+        echo "changelog<<EOF" >> $GITHUB_OUTPUT
+        cat changelog.md >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+    
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        draft: false
+        prerelease: ${{ contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') }}
+    
+    - name: Deploy to Production
+      if: "!contains(github.ref_name, '-beta') && !contains(github.ref_name, '-alpha')"
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only functions,firestore,hosting --project mmk-currency-bot
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
