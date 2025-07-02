@@ -44,6 +44,8 @@ class CommandRouter {
     const { handleSettings } = require('./settings');
     const { handlePredict } = require('./predict');
     const { handleCompare } = require('./compare');
+    const { handleAdminCommand } = require('./admin');
+    const { handleStats } = require('./stats');
 
     // Register commands
     this.register({
@@ -106,13 +108,35 @@ class CommandRouter {
       handler: handleCompare,
     });
 
+    this.register({
+      command: '/stats',
+      description: 'View your usage statistics',
+      handler: async (message, args) => {
+        await handleStats({
+          chatId: message.chat.id,
+          userId: message.from?.id ?? 0,
+          command: '/stats',
+          args: args.split(' ').filter(Boolean),
+          messageType: 'text',
+          from: message.from,
+        });
+      },
+    });
+
     // Admin commands
     this.register({
       command: '/admin',
       description: 'Admin panel',
       adminOnly: true,
-      handler: async (message) => {
-        await sendMessage(message.chat.id, 'Admin panel - Coming soon!');
+      handler: async (message, args) => {
+        await handleAdminCommand({
+          chatId: message.chat.id,
+          userId: message.from?.id ?? 0,
+          command: '/admin',
+          args: args.split(' ').filter(Boolean),
+          messageType: 'text',
+          from: message.from,
+        });
       },
     });
   }

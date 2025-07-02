@@ -4,6 +4,8 @@ import { asyncHandler, AuthenticationError, ValidationError } from '../../utils/
 import { commandRouter } from './commands';
 import { callbackRouter } from './callbacks';
 import { db } from '../../utils/firebase';
+import { trackingMiddleware, userStatusMiddleware } from '../../middleware/tracking';
+import { CommandContext } from '../../types/telegram';
 
 // Telegram Update types
 export interface TelegramUpdate {
@@ -143,8 +145,22 @@ async function handleMessage(message: TelegramMessage) {
       );
       const args = message.text.substring(commandEntity.offset + commandEntity.length).trim();
 
-      // Route to command handler
-      await commandRouter.handle(command, message, args);
+      // Create command context
+      const ctx: CommandContext = {
+        chatId: message.chat.id,
+        userId: message.from.id,
+        command: command.split('@')[0] ?? command, // Remove bot username if present
+        args: args.split(' ').filter(Boolean),
+        messageType: 'text',
+        from: message.from,
+      };
+
+      // Apply middleware and route to command handler
+      await userStatusMiddleware(ctx, async () => {
+        await trackingMiddleware(ctx, async () => {
+          await commandRouter.handle(command, message, args);
+        });
+      });
       return;
     }
   }
@@ -172,6 +188,14 @@ async function handleCallbackQuery(query: TelegramCallbackQuery) {
 
   // Route to callback handler
   if (query.data) {
+    // Track callback query
+    const { trackCallbackQuery } = await import('../../middleware/tracking');
+    const actionName = query.data.split(':')[0] ?? 'unknown';
+    await trackCallbackQuery(query.from.id.toString(), actionName, {
+      data: query.data,
+      messageId: query.message?.message_id,
+    });
+
     await callbackRouter.handle(query.data, query);
   }
 }

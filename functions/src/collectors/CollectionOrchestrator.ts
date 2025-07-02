@@ -257,3 +257,6 @@ export class CollectionOrchestrator {
     return snapshot.docs.map((doc) => doc.data() as RateDocument);
   }
 }
+
+// Export singleton instance
+export const collectionOrchestrator = new CollectionOrchestrator();

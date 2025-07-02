@@ -14,6 +14,7 @@ export const handleHelp: CommandHandler = async (message, _args) => {
 /subscribe [daily|weekly] - Get scheduled updates
 /predict [currency] [days] - Get rate predictions
 /compare [currencies...] - Compare multiple currencies
+/stats - View your usage statistics
 /settings - Manage your preferences
 
 🔹 *Command Examples:*

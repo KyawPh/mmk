@@ -30,6 +30,9 @@ export const collectRates = scheduledFunction('every 30 minutes', collectRatesHa
 // Manual trigger for rate collection (admin only)
 export const triggerCollection = httpsFunction(manualCollectRates);
 
+// Analytics and health monitoring
+export { updateSystemHealth, monitorCriticalIssues } from './handlers/analytics/health';
+
 // TODO: Add more functions as we implement them
 // export const processAlerts = scheduledFunction('every 5 minutes', processAlertsHandler);
 // export const sendSubscriptions = scheduledFunction('0 9 * * *', sendSubscriptionsHandler);

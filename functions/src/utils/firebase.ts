@@ -7,6 +7,7 @@ if (!admin.apps.length) {
 
 // Export initialized services
 export const db = admin.firestore();
+export const getFirestore = () => db;
 export const auth = admin.auth();
 export const storage = admin.storage();
 
